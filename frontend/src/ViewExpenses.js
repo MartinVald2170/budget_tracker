@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
+import {Link} from "react-router-dom"
+import DeleteExpense from "./DeleteExpense"
 
 const ViewExpenses = () => {
-
     const [expenses, setExpenses] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [errorMessage, setErrorMessage] = useState("")
@@ -23,8 +24,14 @@ const ViewExpenses = () => {
         return (
             <>
             {expenses.map((expense, index) => (
-                <li key={expense}> 
-                    {expense.title} is due {expense.due} at {expense.value} dollars</li>
+                <li key={`${expense}-${index}`}> 
+                    {expense.title}
+                    <Link to={`/expenses/${expense.id}`}>View</Link>
+                    <DeleteExpense
+                    expenseId={expense.id}
+                    onDelete={() => setExpenses(expenses.filter((e, i) => e.id !== expense.id))}
+                    />
+                    </li>
             ))}
             </>
         )
