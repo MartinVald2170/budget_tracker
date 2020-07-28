@@ -23,6 +23,7 @@ const ViewExpenses = () => {
     function renderExpenses(){
         return (
             <>
+            
             {expenses.map((expense, index) => (
                 <li key={`${expense}-${index}`}> 
                     {expense.title}
@@ -32,7 +33,7 @@ const ViewExpenses = () => {
                     onDelete={() => setExpenses(expenses.filter((e, i) => e.id !== expense.id))}
                     />
                     </li>
-            ))}
+            ))}<Link to={`/new`}>Create an Expense to Track</Link>
             </>
         )
     }
