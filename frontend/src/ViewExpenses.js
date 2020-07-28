@@ -5,12 +5,17 @@ const ViewExpenses = () => {
 
     const [expenses, setExpenses] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const [errorMessage, setErrorMessage] = useState("")
 
     useEffect(() => {
         axios.get("http://localhost:3000/expenses")
         .then(res => {
             setIsLoading(false)
             setExpenses(res.data)
+        })
+        .catch(e => {
+            setErrorMessage("There was a problem, please refresh and try again")
+            setIsLoading(false)
         })
     }, [])
 
@@ -28,8 +33,8 @@ const ViewExpenses = () => {
 
     return (
         <div>
-            {!isLoading ? renderExpenses(): <h2>Loading Your Expenses Relax</h2>
-            }
+            {errorMessage && <h3>{errorMessage}</h3>}
+            {!isLoading ? renderExpenses(): <h2>Loading Your Expenses Relax</h2>}
 
         </div>
     )
